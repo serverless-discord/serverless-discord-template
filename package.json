@@ -14,6 +14,7 @@
   },
   "author": "Mitch McAffee",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.112",
     "@types/jest": "^29.4.0",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
@@ -29,6 +30,7 @@
   },
   "homepage": "https://github.com/themcaffee/serverless-discord-template#readme",
   "dependencies": {
-    "serverless-discord": "^1.0.12"
+    "aws-lambda": "^1.0.7",
+    "serverless-discord": "^1.0.19"
   }
 }
