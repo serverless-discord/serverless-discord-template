@@ -31,6 +31,6 @@
   "homepage": "https://github.com/themcaffee/serverless-discord-template#readme",
   "dependencies": {
     "aws-lambda": "^1.0.7",
-    "serverless-discord": "^1.0.19"
+    "serverless-discord": "^1.0.27"
   }
 }

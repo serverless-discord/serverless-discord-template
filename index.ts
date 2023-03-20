@@ -1,8 +1,4 @@
-import { ServerlessDiscordCommandChatInput, DiscordInteractionApplicationCommand, DiscordInteractionResponse, DiscordInteractionResponseTypes } from "serverless-discord";
-import { initLambdaRouter } from "serverless-discord/aws";
-
-// You can get this from the Discord Developer Portal
-const DISCORD_PUBLIC_KEY = process.env?.DISCORD_PUBLIC_KEY || "";
+import { ServerlessDiscordCommandChatInput, DiscordInteractionApplicationCommand, DiscordInteractionResponse, DiscordInteractionResponseTypes, initLambdaRouter } from "serverless-discord";
 
 class HelloWorldCommand extends ServerlessDiscordCommandChatInput {
     constructor() {
@@ -21,4 +17,9 @@ class HelloWorldCommand extends ServerlessDiscordCommandChatInput {
     }
 }
 
-const router = initLambdaRouter({ commands: [new HelloWorldCommand()], applicationPublicKey: DISCORD_PUBLIC_KEY });
+const router = initLambdaRouter({ 
+    commands: [new HelloWorldCommand()], 
+    applicationPublicKey: process.env?.DISCORD_PUBLIC_KEY || "" 
+});
+
+export const handler = router.handleLambda;
