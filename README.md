@@ -8,6 +8,13 @@ Template for [serverless-discord](https://github.com/themcaffee/serverless-disco
 npm install
 ```
 
-Edit `src/index.ts` to start adding your own classes
+Edit `index.ts` to start adding your own classes
 
-WIP: Add guide to deploy to lambda
+## Useful commands
+
+ * `npm run build`   compile typescript to js
+ * `npm run watch`   watch for changes and compile
+ * `npm run test`    perform the jest unit tests
+ * `cdk deploy`      deploy this stack to your default AWS account/region
+ * `cdk diff`        compare deployed stack with current state
+ * `cdk synth`       emits the synthesized CloudFormation template
