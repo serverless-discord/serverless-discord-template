@@ -10,6 +10,7 @@ export class HelloWorldCommand extends CommandChatInput {
         });
     }
     async handleInteraction(interaction: DiscordInteractionApplicationCommand): Promise<DiscordInteractionResponse> {
+        console.log(interaction);
         return {
             type: DiscordInteractionResponseTypes.CHANNEL_MESSAGE_WITH_SOURCE,
             data: {

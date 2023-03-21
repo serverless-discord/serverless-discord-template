@@ -20,6 +20,7 @@
     "test": "jest",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix",
     "cdk": "cdk"
   },
   "devDependencies": {
