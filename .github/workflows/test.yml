@@ -1,0 +1,19 @@
+name: Run tests
+
+on:
+  pull_request:
+    branches:
+      - main
+  
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # Setup .npmrc file to publish to npm
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+      - run: npm ci
+      - uses: ArtiomTr/jest-coverage-report-action@v2
