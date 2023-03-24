@@ -8,7 +8,8 @@ const applicationPublicKey = SecretValue.ssmSecure(process.env.DISCORD_PUBLIC_KE
 // Initialize the router with the command and the public key of your application.
 const router = initLambdaRouter({ 
     commands: [new HelloWorldCommand()], 
-    applicationPublicKey
+    applicationPublicKey,
+    logLevel: "debug"
 });
 
 // Export the handler for AWS Lambda.

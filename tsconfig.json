@@ -19,12 +19,14 @@
     "inlineSources": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
+    "esModuleInterop": true,
     "typeRoots": [
       "./node_modules/@types"
     ]
   },
   "exclude": [
     "node_modules",
-    "cdk.out"
+    "cdk.out",
+    "jest.config.ts"
   ]
 }
