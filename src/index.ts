@@ -4,7 +4,7 @@ import { HelloWorldCommand } from "./commands";
 import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
 
 // Initialize the AWS SDK SSM client
-const client = new SSMClient({ region: process.env.AWS_REGION });
+const client = new SSMClient({ region: process.env.AWS_REGION || "us-west-2" });
 
 export const lambdaHandler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
   // Get DISCORD_PUBLIC_KEY from Parameter Store secure string
