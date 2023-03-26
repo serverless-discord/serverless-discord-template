@@ -21,7 +21,8 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy-commands": "ts-node scripts/createCommands.ts"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.112",
@@ -41,7 +42,7 @@
     "aws-cdk-lib": "^2.69.0",
     "aws-lambda": "^1.0.7",
     "constructs": "^10.0.0",
-    "serverless-discord": "^1.0.32",
+    "serverless-discord": "^1.0.35",
     "source-map-support": "^0.5.16"
   }
 }
