@@ -1,3 +1,5 @@
+import * as dotenv from "dotenv";
+dotenv.config();
 import { createRouter } from "../src/router";
 
 // Get secrets from environment variables

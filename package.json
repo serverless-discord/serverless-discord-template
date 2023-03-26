@@ -22,7 +22,7 @@
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "cdk": "cdk",
-    "deploy-commands": "ts-node scripts/createCommands.ts"
+    "deploy:discord": "ts-node scripts/createCommands.ts"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.112",
@@ -42,6 +42,7 @@
     "aws-cdk-lib": "^2.69.0",
     "aws-lambda": "^1.0.7",
     "constructs": "^10.0.0",
+    "dotenv": "^16.0.3",
     "serverless-discord": "^1.0.35",
     "source-map-support": "^0.5.16"
   }
