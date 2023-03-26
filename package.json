@@ -1,6 +1,6 @@
 {
   "name": "serverless-discord-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A template for serverless-discord",
   "homepage": "https://github.com/themcaffee/serverless-discord-template#readme",
   "license": "MIT",
