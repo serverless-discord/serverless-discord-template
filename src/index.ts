@@ -1,17 +1,28 @@
-import { SecretValue } from "aws-cdk-lib";
+import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 import { initLambdaRouter } from "serverless-discord/lambda/router";
 import { HelloWorldCommand } from "./commands";
+import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
+import { createRouter } from "./router";
 
-// Get DISCORD_PUBLIC_KEY from Parameter Store secure string
-const applicationPublicKey = SecretValue.ssmSecure(process.env.DISCORD_PUBLIC_KEY || "").toString();
+// Initialize the AWS SDK SSM client
+const client = new SSMClient({ region: process.env.AWS_REGION || "us-west-2" });
+// Define the application public key and application id here so that
+// we can cache them for subsequent invocations
+let applicationPublicKey = "";
+let applicationId = "";
 
-// Initialize the router with the command and the public key of your application.
-const router = initLambdaRouter({ 
-    commands: [new HelloWorldCommand()], 
-    applicationPublicKey
-});
+export const lambdaHandler = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+  // Get secrets from SSM Parameter store if they are not already cached
+  if (!applicationPublicKey) {
+    const res = await client.send(new GetParameterCommand({ Name: process.env.DISCORD_PUBLIC_KEY || "", WithDecryption: true }));
+    applicationPublicKey = res.Parameter?.Value || "";
+  }
+  if (!applicationId) {
+    const res = await client.send(new GetParameterCommand({ Name: process.env.DISCORD_APPLICATION_ID || "", WithDecryption: true }));
+    applicationId = res.Parameter?.Value || "";
+  }
 
-// Export the handler for AWS Lambda.
-export const handler = router.handleLambda;
-// Export the handler for AWS Lambda Async
-export const asyncHandler = router.handleLambdaAsyncApplicationCommand;
+  // Initialize the router with the command and the public key of your application.
+  const router = createRouter({ applicationPublicKey, applicationId });
+  return router.handleLambda(event);
+};

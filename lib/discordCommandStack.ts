@@ -1,4 +1,4 @@
-import { Stack, StackProps } from 'aws-cdk-lib';
+import { DockerImage, Stack, StackProps } from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as cdk from 'aws-cdk-lib';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
@@ -23,13 +23,24 @@ export class DiscordCommandStack extends Stack {
     // Create Lambda function for handling HTTP
     const httpLambdaFunction = new lambda.Function(this, 'DiscordCommandHttpFunction', {
       runtime: lambda.Runtime.NODEJS_18_X,
-      code: lambda.Code.fromAsset('src/'), // Replace with your Lambda function code path
-      handler: 'index.handler', // Replace with your Lambda function handler file path
-      timeout: cdk.Duration.seconds(60),
+      code: lambda.Code.fromDockerBuild('.'), // Replace with your Lambda function code path
+      handler: 'index.lambdaHandler', // Replace with your Lambda function handler file path
+      timeout: cdk.Duration.seconds(30),
       environment: {
         QUEUE_URL: queue.queueUrl,
+        DISCORD_PUBLIC_KEY: "/dev/serverless-discord-template/DISCORD_PUBLIC_KEY"
       },
+      memorySize: 2048,
     });
+
+    // Grant permissions to the Lambda function to access the SSM Parameter Store secure string
+    httpLambdaFunction.addToRolePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        actions: ['ssm:GetParameter'],
+        resources: ['arn:aws:ssm:*:*:parameter/dev/serverless-discord-template/DISCORD_PUBLIC_KEY'],
+      }),
+    );
 
     const api = new apigateway.RestApi(this, 'DiscordCommandApi', {
       restApiName: 'DiscordCommandApi',
@@ -47,6 +58,7 @@ export class DiscordCommandStack extends Stack {
     apiResource.addMethod('POST', integration);
 
     // Create Lambda function for handling Async commands
+    /*
     const asyncLambdaFunction = new lambda.Function(this, 'DiscordCommandAsyncFunction', {
       runtime: lambda.Runtime.NODEJS_18_X,
       code: lambda.Code.fromAsset('src/'), // Replace with your Lambda function code path
@@ -82,5 +94,6 @@ export class DiscordCommandStack extends Stack {
       batchSize: 1,
     });
     asyncLambdaFunction.addEventSource(eventSource);
+    */
   }
 }

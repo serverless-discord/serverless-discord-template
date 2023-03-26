@@ -1,6 +1,6 @@
 {
   "name": "serverless-discord-template",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A template for serverless-discord",
   "homepage": "https://github.com/themcaffee/serverless-discord-template#readme",
   "license": "MIT",
@@ -21,7 +21,8 @@
     "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "deploy:discord": "ts-node scripts/createCommands.ts"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.112",
@@ -37,10 +38,12 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.299.0",
     "aws-cdk-lib": "^2.69.0",
     "aws-lambda": "^1.0.7",
     "constructs": "^10.0.0",
-    "serverless-discord": "^1.0.27",
+    "dotenv": "^16.0.3",
+    "serverless-discord": "^1.0.35",
     "source-map-support": "^0.5.16"
   }
 }

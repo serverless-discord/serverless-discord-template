@@ -6,6 +6,7 @@ export class HelloWorldCommand extends CommandChatInput {
     constructor() {
         super({
             name: "test",
+            description: "Test command",
             options: [],
         });
     }

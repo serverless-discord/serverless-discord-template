@@ -9,6 +9,10 @@ const config: Config = {
     }
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/cdk.out/',
+  ]
 }
 
 export default config;
