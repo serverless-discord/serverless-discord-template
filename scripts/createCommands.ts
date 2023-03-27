@@ -1,24 +1,14 @@
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 dotenv.config();
-import { createRouter } from "../src/router";
+import { initRegistrar } from "serverless-discord/core/register";
+import { commands } from "../src";
 
-// Get secrets from environment variables
-const applicationPublicKey = process.env.DISCORD_PUBLIC_KEY || "";
 const applicationId = process.env.DISCORD_APPLICATION_ID || "";
 const botToken = process.env.DISCORD_BOT_TOKEN || "";
 
-if (!applicationPublicKey || !applicationId || !botToken) {
-  throw new Error("Missing environment variables");
+if (!applicationId || !botToken) {
+  throw new Error("DISCORD_APPLICATION_ID and DISCORD_BOT_TOKEN must be set");
 }
 
-// Initialize the router with the command and the public key of your application.
-const router = createRouter({
-  applicationPublicKey,
-  applicationId,
-  botToken,
-});
-
-// Register all commands
-console.log("Registering all commands");
-Promise.resolve(router.registerAllCommands());
-console.log("Registered all commands");
+const registrar = initRegistrar({ commands, applicationId, botToken, logLevel: "debug" });
+registrar.registerAllCommands();
