@@ -1,6 +1,4 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
-import { initLambdaRouter } from "serverless-discord/lambda/router";
-import { HelloWorldCommand } from "./commands";
 import { GetParameterCommand, SSMClient } from "@aws-sdk/client-ssm";
 import { createRouter } from "./router";
 

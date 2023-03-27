@@ -8,10 +8,10 @@ export const createRouter = ({ applicationPublicKey, applicationId, botToken } :
   botToken?: string;
 }) => {
   return initLambdaRouter({ 
-      commands: [new HelloWorldCommand()], 
-      applicationPublicKey,
-      applicationId,
-      botToken,
-      logLevel: "debug"
+    commands: [new HelloWorldCommand()], 
+    applicationPublicKey,
+    applicationId,
+    botToken,
+    logLevel: "debug"
   });
 };

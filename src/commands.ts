@@ -3,20 +3,20 @@ import { DiscordInteractionApplicationCommand, DiscordInteractionResponse, Disco
 
 // This is a simple command that replies with "Hello World!" when the command is executed.
 export class HelloWorldCommand extends CommandChatInput {
-    constructor() {
-        super({
-            name: "test",
-            description: "Test command",
-            options: [],
-        });
-    }
-    async handleInteraction(interaction: DiscordInteractionApplicationCommand): Promise<DiscordInteractionResponse> {
-        console.log(interaction);
-        return {
-            type: DiscordInteractionResponseTypes.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: {
-                content: "Hello World!",
-            },
-        }
-    }
+  constructor() {
+    super({
+      name: "test",
+      description: "Test command",
+      options: [],
+    });
+  }
+  async handleInteraction(interaction: DiscordInteractionApplicationCommand): Promise<DiscordInteractionResponse> {
+    console.log(interaction);
+    return {
+      type: DiscordInteractionResponseTypes.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: {
+        content: "Hello World!",
+      },
+    };
+  }
 }

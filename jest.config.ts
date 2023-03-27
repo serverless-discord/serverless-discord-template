@@ -13,6 +13,6 @@ const config: Config = {
     '/node_modules/',
     '/cdk.out/',
   ]
-}
+};
 
 export default config;
