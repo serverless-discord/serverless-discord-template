@@ -1,5 +1,5 @@
 import { CommandChatInput, CommandChatInputAsync } from "serverless-discord/core/command";
-import { DiscordInteractionApplicationCommand, DiscordInteractionResponse, DiscordInteractionResponseTypes } from "serverless-discord/discord/interactions";
+import { DiscordInteractionApplicationCommand, DiscordInteractionResponse, DiscordInteractionResponseData, DiscordInteractionResponseTypes } from "serverless-discord/discord/interactions";
 
 // This is a simple command that replies with "Hello World!" when the command is executed.
 export class HelloWorldCommand extends CommandChatInput {
@@ -30,12 +30,7 @@ export class HelloWorldCommandAsync extends CommandChatInputAsync {
     });
   }
 
-  async handleInteractionAsync(interaction: DiscordInteractionApplicationCommand): Promise<DiscordInteractionResponse> {
-    return {
-      type: DiscordInteractionResponseTypes.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: "Hello from async land!",
-      },
-    };
+  async handleInteractionAsync(interaction: DiscordInteractionApplicationCommand): Promise<DiscordInteractionResponseData> {
+    return { content: "Hello from async land!" };
   }
 }

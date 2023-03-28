@@ -34,6 +34,16 @@ export class DiscordCommandStack extends Stack {
       DISCORD_BOT_TOKEN: props.discordBotToken,
     };
 
+    const allowGetParameter = new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: ['ssm:GetParameter'],
+      resources: [
+        `arn:aws:ssm:${this.region}:${this.account}:parameter${props.discordPublicKey}`,
+        `arn:aws:ssm:${this.region}:${this.account}:parameter${props.discordApplicationId}`,
+        `arn:aws:ssm:${this.region}:${this.account}:parameter${props.discordBotToken}`,
+      ],
+    });
+
     // Create Lambda function for handling HTTP
     const httpLambdaFunction = new lambda.Function(this, 'DiscordCommandHttpFunction', {
       runtime: lambda.Runtime.NODEJS_18_X,
@@ -45,13 +55,7 @@ export class DiscordCommandStack extends Stack {
     });
 
     // Grant permissions to the Lambda function to access the SSM Parameter Store secure string
-    httpLambdaFunction.addToRolePolicy(
-      new iam.PolicyStatement({
-        effect: iam.Effect.ALLOW,
-        actions: ['ssm:GetParameter'],
-        resources: ['arn:aws:ssm:*:*:parameter/dev/serverless-discord-template/DISCORD_PUBLIC_KEY'],
-      }),
-    );
+    httpLambdaFunction.addToRolePolicy(allowGetParameter);
 
     const api = new apigateway.RestApi(this, 'DiscordCommandApi', {
       restApiName: 'DiscordCommandApi',
@@ -71,11 +75,14 @@ export class DiscordCommandStack extends Stack {
     // Create Lambda function for handling Async commands
     const asyncLambdaFunction = new lambda.Function(this, 'DiscordCommandAsyncFunction', {
       runtime: lambda.Runtime.NODEJS_18_X,
-      code: lambda.Code.fromAsset('src/'), // Replace with your Lambda function code path
+      code: lambda.Code.fromDockerBuild('.'), // Replace with your Lambda function code path
       handler: 'index.asyncHandler', // Replace with your Lambda function handler file path
       timeout: cdk.Duration.seconds(30),
       environment,
     });
+
+    // Grant permissions to the Lambda function to access the SSM Parameter Store secure string
+    asyncLambdaFunction.addToRolePolicy(allowGetParameter);
 
     // Grant permissions to the Lambda function to access the SQS queue
     queue.grantConsumeMessages(asyncLambdaFunction);

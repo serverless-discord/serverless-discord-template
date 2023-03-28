@@ -7,6 +7,7 @@ import { initAsyncLambdaRouter, initLambdaRouter } from "serverless-discord/lamb
 const DISCORD_PUBLIC_KEY = process.env.DISCORD_PUBLIC_KEY || "";
 const DISCORD_APPLICATION_ID = process.env.DISCORD_APPLICATION_ID || "";
 const DISCORD_BOT_TOKEN = process.env.DISCORD_BOT_TOKEN || "";
+const queueUrl = process.env.QUEUE_URL || "";
 
 // Initialize the AWS SDK SSM client
 const ssmClient = new SSMClient({ region: process.env.AWS_REGION || "us-west-2" });
@@ -16,7 +17,6 @@ const ssmClient = new SSMClient({ region: process.env.AWS_REGION || "us-west-2" 
 let applicationPublicKey: string;
 let applicationId: string;
 let botToken: string;
-const queueUrl = process.env.QUEUE_URL || "";
 
 export const commands = [
   new HelloWorldCommand(), 
